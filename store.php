@@ -285,7 +285,17 @@
 								<a href="product.php?p_id=<?php echo $row['id']; ?>">
 									<div class="product">
 										<div class="product-img">
-											<img width="100%" height="250" style="object-fit: contain; padding: 15px;" src="./uploads/<?php echo htmlspecialchars($_st_img); ?>" alt="<?php echo htmlspecialchars($row['p_name'] ?? ''); ?>">
+											<?php
+									$_st_img = 'default.png';
+									foreach ($new_images as $_candidate) {
+										$_candidate = basename(trim(str_replace('../../uploads/', '', $_candidate)));
+										if ($_candidate !== '' && file_exists(__DIR__ . '/uploads/' . $_candidate)) {
+											$_st_img = $_candidate;
+											break;
+										}
+									}
+								?>
+								<img width="100px" height="280px" src="./uploads/<?php echo htmlspecialchars($_st_img); ?>" alt="<?php echo htmlspecialchars($row['p_name'] ?? ''); ?>">
 											<div class="product-label">
 												<?php if ($percent > 0): ?>
 													<span class="sale">-<?php echo ceil($percent); ?>%</span>
